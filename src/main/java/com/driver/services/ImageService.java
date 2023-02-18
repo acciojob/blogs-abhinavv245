@@ -43,7 +43,11 @@ public class ImageService {
         int iLen=Integer.parseInt(img[0]);
         int iBreadth=Integer.parseInt(img[0]);
 
-        count=(sLen/iLen)*(sBreadth/iBreadth);
-        return count;
+       return count(sLen,sBreadth,iLen,iBreadth);
+    }
+    private int count(int screenL,int screenB,int iLen,int iBre){
+        int len= screenL/iLen;
+        int bre=screenB/iBre;
+        return len*bre;
     }
 }
