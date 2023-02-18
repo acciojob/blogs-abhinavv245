@@ -15,29 +15,35 @@ public class ImageService {
     @Autowired
     ImageRepository imageRepository2;
 
-    public Image addImage(Integer blogId, String description, String dimensions){
-        Blog blog=blogRepository2.findById(blogId).get();
+    public Image addImage(Integer blogId, String description, String dimensions) {
+        Blog blog = blogRepository2.findById(blogId).get();
         //create image object
-        Image image= new Image(blog,description,dimensions);
-       blog.getImageList().add(image);
-       //only saving the blog as image will be automatically saved due to bidirectional mapping
+        Image image = new Image(blog, description, dimensions);
+        blog.getImageList().add(image);
+        //only saving the blog as image will be automatically saved due to bidirectional mapping
         blogRepository2.save(blog);
         return image;
     }
 
-    public void deleteImage(Integer id){
-       imageRepository2.deleteById(id);
+    public void deleteImage(Integer id) {
+        imageRepository2.deleteById(id);
     }
 
     public int countImagesInScreen(Integer id, String screenDimensions) {
-       Image image= imageRepository2.findById(id).get();
-       String imageDimension= image.getDimensions();
-       Integer imgArea= ((int) imageDimension.charAt(0)-'0') * ((int) imageDimension.charAt(2)-'0');
-       Integer screenArea= ((int) screenDimensions.charAt(0)-'0') * ((int) screenDimensions.charAt(2)-'0');
+        int count = 0;
 
-       int count=0;
-       if(imgArea>0) count=screenArea/imgArea;
-       else count=0;
-       return count;
+        String[] screen = screenDimensions.split("X");
+        Image image = imageRepository2.findById(id).get();
+        String imageDimensions = image.getDimensions();
+        String[] img = imageDimensions.split("X");
+
+
+        int sLen=Integer.parseInt(screen[0]);
+        int sBreadth=Integer.parseInt(screen[1]);
+        int iLen=Integer.parseInt(img[0]);
+        int iBreadth=Integer.parseInt(img[0]);
+
+        count=(sLen/iLen)*(sBreadth/iBreadth);
+        return count;
     }
 }
