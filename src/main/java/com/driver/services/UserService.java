@@ -20,7 +20,8 @@ public class UserService {
       user.setPassword(password);
       List<Blog> blogList= new ArrayList<>();
       user.setBlogList(blogList);
-      return userRepository3.save(user);
+     userRepository3.save(user);
+     return user;
     }
 
     public void deleteUser(int userId){
@@ -31,6 +32,7 @@ public class UserService {
     public User updateUser(Integer id, String password){
     User user= userRepository3.findById(id).get();
     user.setPassword(password);
-    return userRepository3.save(user);
+    userRepository3.save(user);
+    return user;
     }
 }

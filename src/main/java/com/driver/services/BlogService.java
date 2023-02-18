@@ -30,12 +30,12 @@ public class BlogService {
         blog.setUser(user);
        List<Image> imageList= new ArrayList<>();
        blog.setImageList(imageList);
-        return blogRepository1.save(blog);
+        blogRepository1.save(blog);
+        return blog;
     }
 
     public void deleteBlog(int blogId){
         Blog blog=blogRepository1.findById(blogId).get();
-        List<Image> imageList=blog.getImageList();
         blogRepository1.delete(blog);
 
     }
