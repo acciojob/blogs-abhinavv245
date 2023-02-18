@@ -22,21 +22,20 @@ public class BlogService {
     UserRepository userRepository1;
 
     public Blog createAndReturnBlog(Integer userId, String title, String content) {
-        Blog blog= new Blog();
-        blog.setTitle(title);
-        blog.setContent(content);
-        blog.setPubDate(new Date());
+        //get user
         User user= userRepository1.findById(userId).get();
-        blog.setUser(user);
-       List<Image> imageList= new ArrayList<>();
-       blog.setImageList(imageList);
-        blogRepository1.save(blog);
+        //create blog object
+        Blog blog= new Blog(user,title,content);
+        blog.setPubDate(new Date());
+        //add blog to the user
+        user.getBlogList().add(blog);
+        //save user
+        //blog will be automatically saved due to bidirectional mapping
+        userRepository1.save(user);
         return blog;
     }
 
     public void deleteBlog(int blogId){
-        Blog blog=blogRepository1.findById(blogId).get();
-        blogRepository1.delete(blog);
-
+       blogRepository1.deleteById(blogId);
     }
 }
