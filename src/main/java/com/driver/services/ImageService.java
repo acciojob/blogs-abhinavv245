@@ -34,7 +34,10 @@ public class ImageService {
        String imageDimension= image.getDimensions();
        Integer imgArea= ((int) imageDimension.charAt(0)-'0') * ((int) imageDimension.charAt(2)-'0');
        Integer screenArea= ((int) screenDimensions.charAt(0)-'0') * ((int) screenDimensions.charAt(2)-'0');
-       int count=screenArea/imgArea;
+
+       int count=0;
+       if(imgArea>0) count=screenArea/imgArea;
+       else count=0;
        return count;
     }
 }
